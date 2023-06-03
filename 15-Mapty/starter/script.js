@@ -3,14 +3,6 @@
 // prettier-ignore
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
-const form = document.querySelector('.form');
-const containerWorkouts = document.querySelector('.workouts');
-const inputType = document.querySelector('.form__input--type');
-const inputDistance = document.querySelector('.form__input--distance');
-const inputDuration = document.querySelector('.form__input--duration');
-const inputCadence = document.querySelector('.form__input--cadence');
-const inputElevation = document.querySelector('.form__input--elevation');
-
 class Workout {
   date = new Date();
   id = (Date.now() + '').slice(-10); //relying on time to create an id
@@ -51,19 +43,23 @@ class Cycling extends Workout {
 
 /////////////////////////////////////////////////////////////////////////////
 // APPLICATION ARCHITECTURE
+
+const form = document.querySelector('.form');
+const containerWorkouts = document.querySelector('.workouts');
+const inputType = document.querySelector('.form__input--type');
+const inputDistance = document.querySelector('.form__input--distance');
+const inputDuration = document.querySelector('.form__input--duration');
+const inputCadence = document.querySelector('.form__input--cadence');
+const inputElevation = document.querySelector('.form__input--elevation');
+
 class App {
   #map;
   #mapEvent;
 
   constructor(){
     this._getPosition();
-
-    form.addEventListener('submit', this._newWorkout.bind(this)); //Need to .bind(this) otherwise it wil point to the form    
-
-    inputType.addEventListener('change', function(){
-      inputElevation.closest('.form__row').classList.toggle('form__row--hidden');
-      inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
-    });
+    form.addEventListener('submit', this._newWorkout.bind(this)); //Need to .bind(this) otherwise it wil point to the form 
+    inputType.addEventListener('change', this._toggleElevationField);
   }
 
   _getPosition() {
@@ -98,15 +94,23 @@ class App {
     inputDistance.focus();
   }
 
-  _toggleElevationField() {}
+  _toggleElevationField() {
+    inputElevation.closest('.form__row').classList.toggle('form__row--hidden');
+    inputCadence.closest('.form__row').classList.toggle('form__row--hidden');
+  }
 
   _newWorkout(e) {
     e.preventDefault();    
     
-    //Clear input fields
-    inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value = ''; 
-    
-    //Display marker
+    //Get data from form
+
+    //Check if data is valid
+
+    //If activity running, create running object
+
+    //If activity cycling, create cycling object
+
+    //Render workout on map as marker
     const {lat, lng} = this.#mapEvent.latlng;     
     L.marker([lat, lng]).addTo(this.#map)
       .bindPopup(L.popup({
@@ -118,6 +122,13 @@ class App {
       }))
       .setPopupContent('Workout')
       .openPopup();
+
+    //Render workout on list
+
+    //Hide form + clear input fields
+
+    //Clear input fields
+    inputDistance.value = inputDuration.value = inputCadence.value = inputElevation.value = ''; 
   }
 }
 
