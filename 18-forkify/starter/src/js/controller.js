@@ -16,17 +16,18 @@ const controlRecipes = async function(){
     console.log(id);
 
     if(!id) return; //add guard clause
-
     recipeView.renderSpinner(recipeContainer);
 
     await model.loadRecipe(id);
 
     recipeView.render(model.state.recipe);    
   } catch (err) {
-    alert(err);
+    console.log(err);
   }
 }
 
-controlRecipes();
+const init = function() {
+  recipeView.addHandlerRender(controlRecipes); //implement the publishes/subscriber pattern
+}
 
-['hashchange', 'load'].forEach(ev => window.addEventListener(ev, recipeView));
+init();
