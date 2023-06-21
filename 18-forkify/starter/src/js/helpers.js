@@ -18,6 +18,7 @@ export const getJSON = async function(url){
 
     return data;
   } catch(err) {
+    console.error(err);
     throw err; 
     //VERY IMPORTANT TO DO THIS HERE SO THAT IT THROWS THE CORRECT ERROR HERE INSTEAD 
     //OF GOING TO THE ERROR IN THE TRY/CATCH OF THE BLOCK OF CODE CALLING THIS getJSON() method
