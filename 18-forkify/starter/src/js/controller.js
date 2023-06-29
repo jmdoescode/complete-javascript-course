@@ -83,7 +83,12 @@ const controlAddBookmark = function() {
   bookmarksView.render(model.state.bookmarks);
 }
 
+const controlBookmarks = function(){
+  bookmarksView.render(model.state.bookmarks);
+}
+
 const init = function() {
+  bookmarksView.addHandlerRender(controlBookmarks);
   recipeView.addHandlerRender(controlRecipes); //implement the publishes/subscriber pattern
   recipeView.addHandlerUpdateServings(controlServings);
   recipeView.addHandlerAddBookmark(controlAddBookmark);
@@ -92,3 +97,7 @@ const init = function() {
 }
 
 init();
+
+const clearBookmarks = function(){
+  localStorage.clear('bookmarks');
+}
